@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: product
+  output:
+    ansi:
+      enabled: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        globally_quoted_identifiers_skip_column_definitions: true
+        auto_quoting_enabled: true
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 50
+  datasource:
+    hikari:
+      connection-test-query: SELECT 1 FROM DUAL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:9306/product?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: local
+    password: local
+
+springdoc:
+  show-actuator: false
+  swagger-ui:
+    enabled: true
+    tagsSorter: alpha
