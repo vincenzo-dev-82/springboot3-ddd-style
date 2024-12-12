@@ -38,7 +38,7 @@ dependencies {
 
     implementation("com.querydsl:querydsl-core:5.0.0")
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
-//    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
 
     runtimeOnly("com.h2database:h2")
     runtimeOnly("mysql:mysql-connector-java:8.0.28")
@@ -50,12 +50,12 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-//kapt {
-//    arguments {
-//        arg("querydsl.entityAccessors", "true")
-//        arg("querydsl.spring", "true")
-//    }
-//}
+kapt {
+    arguments {
+        arg("querydsl.entityAccessors", "true")
+        arg("querydsl.spring", "true")
+    }
+}
 
 kotlin {
     compilerOptions {
