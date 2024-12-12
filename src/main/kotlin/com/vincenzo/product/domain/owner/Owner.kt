@@ -1,5 +1,6 @@
 package com.vincenzo.product.domain.owner
 
+import com.vincenzo.product.shared.Audit
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -12,7 +13,7 @@ import org.hibernate.annotations.DynamicUpdate
 @Table(name = "owner")
 data class Owner(
     val name: String,
-) {
+) : Audit() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
