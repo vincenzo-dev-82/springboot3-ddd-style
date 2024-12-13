@@ -45,4 +45,6 @@ data class Car(
         TRUCK,
         BIKE,
     }
+
+    companion object
 }
