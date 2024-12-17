@@ -1,27 +1,32 @@
-package com.kakaopay.ad.domain.advertisement.service
+package com.vincenzo.product.applicaitoin
 
+import com.vincenzo.product.applicaitoin.dto.CarResources
 import com.vincenzo.product.applicaitoin.service.CarService
 import com.vincenzo.product.domain.aDummy
 import com.vincenzo.product.domain.car.Car
 import com.vincenzo.product.domain.car.CarRepository
+import org.apache.logging.log4j.util.Strings
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import java.lang.reflect.Field
 
 class CarServiceTest {
-    private val carRepository: CarRepository = mock(CarRepository::class.java)
+    private val carRepository: CarRepository = mock()
     private val carService = CarService(carRepository)
 
     private lateinit var actual: Car
 
     @BeforeEach
     fun setUp() {
-        actual = Car.aDummy()
+        actual = Car.Companion.aDummy()
+        setIdUsingReflection(actual, 1L)
     }
 
     @DisplayName("모든 차량을 조회한다")
@@ -30,14 +35,22 @@ class CarServiceTest {
         // Given
         val carList =
             listOf(
-                Car.aDummy(),
                 Car(
-                    alias = "Car2",
+                    alias = "TestCar",
                     type = Car.Type.CAR,
-                    plateNumber = "456DEF",
-                    brandName = "Ford",
-                    modelName = "F-150",
-                ),
+                    plateNumber = "123가1111",
+                    brandName = "BMW",
+                    modelName = "M1",
+                    brandImage = Strings.EMPTY,
+                ).also { setIdUsingReflection(it, 1L) },
+                Car(
+                    alias = "TestCar",
+                    type = Car.Type.CAR,
+                    plateNumber = "123가2222",
+                    brandName = "BMW",
+                    modelName = "M2",
+                    brandImage = Strings.EMPTY,
+                ).also { setIdUsingReflection(it, 2L) },
             )
         whenever(carRepository.findAll()).thenReturn(carList)
 
@@ -46,6 +59,8 @@ class CarServiceTest {
 
         // Then
         assertEquals(2, result.size)
+        assertEquals("M1", result[0].modelName)
+        assertEquals("M2", result[1].modelName)
         verify(carRepository, times(1)).findAll()
     }
 
@@ -63,13 +78,34 @@ class CarServiceTest {
     @Test
     fun `save car`() {
         // Given
-        whenever(carRepository.save(actual)).thenReturn(actual)
+        val actual = Car.Companion.aDummy()
+        val request =
+            CarResources.CarRequestDTO(
+                alias = "TestCar",
+                type = "CAR",
+                plateNumber = "123가3333",
+                brandName = "BMW",
+                modelName = "M3",
+                brandImage = Strings.EMPTY,
+            )
+        whenever(carRepository.save(any())).thenReturn(actual)
 
         // When
-        val expected = carRepository.save(actual)
+        val result = carService.create(request)
 
         // Then
-        assertEquals(actual, expected)
-        verify(carRepository, times(1)).save(actual) // save 메서드 호출 검증
+        assertEquals(actual.plateNumber, result.plateNumber)
+        assertEquals("BMW", result.brandName)
+        assertEquals("M3", result.modelName)
+        verify(carRepository, times(1)).save(any())
+    }
+
+    private fun setIdUsingReflection(
+        target: Any,
+        id: Long,
+    ) {
+        val idField: Field = target::class.java.getDeclaredField("id")
+        idField.isAccessible = true
+        idField.set(target, id)
     }
 }

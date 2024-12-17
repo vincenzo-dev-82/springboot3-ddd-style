@@ -1,15 +1,16 @@
 package com.vincenzo.product.domain
 
 import com.vincenzo.product.domain.car.Car
+import org.apache.logging.log4j.util.Strings
 
 internal class CarTest
 
 internal fun Car.Companion.aDummy() =
     Car(
-        alias = "My Honey",
+        alias = "TestCar",
         type = Car.Type.CAR,
-        plateNumber = "123가1234",
+        plateNumber = "123가3333",
         brandName = "BMW",
         modelName = "M3",
-        brandImage = "/brands/bmw.png",
+        brandImage = Strings.EMPTY,
     )
