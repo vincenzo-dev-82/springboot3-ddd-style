@@ -27,15 +27,24 @@ class CarServiceTest {
     @DisplayName("모든 차량을 조회한다")
     @Test
     fun `get all cars`() {
+        // Given
         val carList =
             listOf(
                 Car.aDummy(),
-                Car(alias = "Car2", type = Car.Type.CAR, plateNumber = "456DEF", brandName = "Ford", modelName = "F-150"),
+                Car(
+                    alias = "Car2",
+                    type = Car.Type.CAR,
+                    plateNumber = "456DEF",
+                    brandName = "Ford",
+                    modelName = "F-150",
+                ),
             )
         whenever(carRepository.findAll()).thenReturn(carList)
 
+        // When
         val result = carService.getAllCars()
 
+        // Then
         assertEquals(2, result.size)
         verify(carRepository, times(1)).findAll()
     }

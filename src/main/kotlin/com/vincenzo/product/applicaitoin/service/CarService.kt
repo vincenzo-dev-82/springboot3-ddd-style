@@ -2,7 +2,6 @@ package com.vincenzo.product.applicaitoin.service
 
 import com.vincenzo.product.applicaitoin.dto.CarResources
 import com.vincenzo.product.applicaitoin.mapper.CarMapper
-import com.vincenzo.product.domain.car.Car
 import com.vincenzo.product.domain.car.CarRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -32,9 +31,10 @@ class CarService(
     }
 
     @Transactional
-    fun updateCar(car: Car): CarResources.CarResponseDTO {
+    fun updateCar(request: CarResources.CarRequestDTO): CarResources.CarResponseDTO {
         // 비즈니스 규칙은 DomainService나 Entity에 위임
-        val savedCar = carRepository.save(car)
+        val updatedCar = CarMapper.toEntity(request)
+        val savedCar = carRepository.save(updatedCar)
         return CarMapper.toDTO(savedCar)
     }
 
