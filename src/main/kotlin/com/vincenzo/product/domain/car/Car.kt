@@ -1,5 +1,6 @@
 package com.vincenzo.product.domain.car
 
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.vincenzo.product.shared.Audit
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -22,7 +23,7 @@ import org.hibernate.annotations.DynamicUpdate
 )
 data class Car(
     @Column(nullable = true)
-    val alias: String,
+    val alias: String?,
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(10)")
     var type: Type = Type.CAR,
@@ -44,6 +45,15 @@ data class Car(
         CAR,
         TRUCK,
         BIKE,
+        ;
+
+        companion object {
+            @JsonCreator
+            @JvmStatic
+            fun fromValue(value: String): Type =
+                values().find { it.name.equals(value, ignoreCase = true) }
+                    ?: throw IllegalArgumentException("Invalid CarType: $value")
+        }
     }
 
     companion object
