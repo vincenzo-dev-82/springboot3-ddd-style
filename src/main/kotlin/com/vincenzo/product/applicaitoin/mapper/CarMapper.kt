@@ -2,6 +2,7 @@ package com.vincenzo.product.applicaitoin.mapper
 
 import com.vincenzo.product.applicaitoin.dto.CarResources
 import com.vincenzo.product.domain.car.Car
+import org.apache.logging.log4j.util.Strings
 
 object CarMapper {
     fun toDTO(car: Car): CarResources.CarResponseDTO =
@@ -12,7 +13,7 @@ object CarMapper {
             plateNumber = car.plateNumber,
             brandName = car.brandName,
             modelName = car.modelName,
-            brandImage = car.brandImage,
+            brandImage = car.brandImage ?: Strings.EMPTY,
         )
 
     fun toEntity(request: CarResources.CarRequestDTO): Car =

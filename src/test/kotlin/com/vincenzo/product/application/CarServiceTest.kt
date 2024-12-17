@@ -78,8 +78,7 @@ class CarServiceTest {
     @Test
     fun `save car`() {
         // Given
-        val actual = Car.Companion.aDummy()
-        val request =
+        val requestDTO =
             CarResources.CarRequestDTO(
                 alias = "TestCar",
                 type = "CAR",
@@ -88,10 +87,12 @@ class CarServiceTest {
                 modelName = "M3",
                 brandImage = Strings.EMPTY,
             )
+        val actual = Car.Companion.aDummy()
+        setIdUsingReflection(actual, 1L)
         whenever(carRepository.save(any())).thenReturn(actual)
 
         // When
-        val result = carService.create(request)
+        val result = carService.create(requestDTO)
 
         // Then
         assertEquals(actual.plateNumber, result.plateNumber)
