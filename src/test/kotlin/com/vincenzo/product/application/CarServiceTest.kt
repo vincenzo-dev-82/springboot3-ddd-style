@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
 import org.mockito.kotlin.whenever
 
 class CarServiceTest {
@@ -33,7 +32,7 @@ class CarServiceTest {
                 Car.aDummy(),
                 Car(alias = "Car2", type = Car.Type.CAR, plateNumber = "456DEF", brandName = "Ford", modelName = "F-150"),
             )
-        `when`(carRepository.findAll()).thenReturn(carList)
+        whenever(carRepository.findAll()).thenReturn(carList)
 
         val result = carService.getAllCars()
 
@@ -41,9 +40,19 @@ class CarServiceTest {
         verify(carRepository, times(1)).findAll()
     }
 
+    /**
+     *
+     * When
+     * - whenever 설정만으로도 로직은 이미 검증되지만, 호출 검증이 중요하다면 verify()를 추가 사용.
+     *
+     * Then
+     * - 로직의 동작을 검증할 때는 assertEquals만 사용.
+     * - 메서드 호출 여부를 검증할 때만 verify를 사용.
+     *   - 특히 Mock 객체의 호출 여부를 검증할 때 필요.
+     */
     @DisplayName("차량을 입력한다")
     @Test
-    fun validateAdvertisementName() {
+    fun `save car`() {
         // Given
         whenever(carRepository.save(actual)).thenReturn(actual)
 
@@ -52,5 +61,6 @@ class CarServiceTest {
 
         // Then
         assertEquals(actual, expected)
+        verify(carRepository, times(1)).save(actual) // save 메서드 호출 검증
     }
 }
