@@ -1,8 +1,8 @@
 package com.vincenzo.product.presentation
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.vincenzo.product.applicaitoin.dto.CarResources
-import com.vincenzo.product.applicaitoin.service.CarService
+import com.vincenzo.product.application.dto.CarResources
+import com.vincenzo.product.application.service.CarService
 import com.vincenzo.product.presentation.controller.CarController
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any

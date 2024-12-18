@@ -1,4 +1,4 @@
-package com.vincenzo.product.applicaitoin.dto
+package com.vincenzo.product.application.dto
 
 class CarResources {
     data class CarRequestDTO(

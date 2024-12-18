@@ -1,7 +1,7 @@
-package com.vincenzo.product.applicaitoin
+package com.vincenzo.product.application
 
-import com.vincenzo.product.applicaitoin.dto.CarResources
-import com.vincenzo.product.applicaitoin.service.CarService
+import com.vincenzo.product.application.dto.CarResources
+import com.vincenzo.product.application.service.CarService
 import com.vincenzo.product.domain.aDummy
 import com.vincenzo.product.domain.car.Car
 import com.vincenzo.product.domain.car.CarRepository

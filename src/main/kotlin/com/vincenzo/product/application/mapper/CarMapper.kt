@@ -1,6 +1,6 @@
-package com.vincenzo.product.applicaitoin.mapper
+package com.vincenzo.product.application.mapper
 
-import com.vincenzo.product.applicaitoin.dto.CarResources
+import com.vincenzo.product.application.dto.CarResources
 import com.vincenzo.product.domain.car.Car
 import org.apache.logging.log4j.util.Strings
 
